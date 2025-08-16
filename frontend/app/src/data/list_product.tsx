@@ -1,0 +1,51 @@
+export const Lista = [
+{
+    id: 1,
+    product: "Camisa",
+    price: 250,
+    qtd: 1,
+    description: "Camisa de algodao",
+    image: "https://picsum.photos/300/300",
+},
+{
+    id: 2,
+    product: "Calça",
+    price: 300,
+    qtd: 3,
+    description: "Calça de algodao",
+    image: "https://picsum.photos/300/300",
+},
+{
+    id: 3,
+    product: "Bermuda",
+    price: 350,
+    qtd: 3,
+    description: "Bermuda de algodao",
+    image: "https://picsum.photos/300/300",
+},
+{
+    id: 4,
+    product: "Calcinha",
+    price: 30,
+    qtd: 4,
+    description: "Calçinha de algodao",
+    image: "https://picsum.photos/300/300",
+},
+{
+    id: 5,
+    product: "Cueca",
+    price: 50,
+    qtd: 3,
+    description: "Cueca de algodao",
+    image: "https://picsum.photos/300/300",
+},
+{
+    id: 6,
+    product: "Meia",
+    price: 10,
+    qtd: 1,
+    description: "Meia de algodao",
+    image: "https://picsum.photos/300/300",
+},
+
+]

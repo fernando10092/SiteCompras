@@ -1,0 +1,45 @@
+# Ambiente Python
+env/
+venv/
+*.pyc
+*.pyo
+__pycache__/
+*.pyd
+*.pdb
+*.egg-info/
+.eggs/
+
+# Django
+db.sqlite3
+media/
+staticfiles/
+*.log
+
+# Arquivos de migração (se quiser ignorar, mas geralmente é melhor versionar)
+# */migrations/*.py
+# !*/migrations/__init__.py
+
+# Configurações locais
+*.env
+.env.*
+
+# VSCode / IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Node / React
+node_modules/
+dist/
+build/
+*.lock
+
+# Coverage / Testes
+.coverage
+htmlcov/
+pytest_cache/

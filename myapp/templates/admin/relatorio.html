@@ -1,0 +1,30 @@
+<!-- templates/admin/relatorio.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload de Hero</title>
+</head>
+<body>
+    <h1>Upload de imagem - Hero</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="hero_image" accept="image/*" required>
+        <button type="submit">Enviar</button>
+    </form>
+    {% if uploaded_url %}
+        <p>Imagem enviada com sucesso!</p>
+        <img src="{{ uploaded_url }}" alt="Nova imagem Hero" width="300">
+    {% endif %}
+
+    <h1>Imagem Carrosel 1 </h1>
+    <h1>Texto Carrosel 1 </h1>
+    <h1>Texto Carrosel 1 </h1>
+    <h1>Imagem Carrosel 2 </h1>
+    <h1>Texto Carrosel 2 </h1>
+    <h1>Texto Carrosel 2 </h1>
+    <h1>Imagem Carrosel 3 </h1>
+    <h1>Texto Carrosel 3 </h1>
+    <h1>Texto Carrosel 3 </h1>
+</body>
+</html>
