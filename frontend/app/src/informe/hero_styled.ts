@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Layout = styled.div`
 width: 100%;
 height: 300px;
-background-color: red;
+background-color: black;
 `
 
 export const ImgCarousel = styled.img`

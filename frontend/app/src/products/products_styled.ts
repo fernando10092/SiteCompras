@@ -2,14 +2,12 @@ import styled from "styled-components";
 
 export const Background = styled.div`
 width: 100%;
-height: 100vh;
-background-color: 	#FFFAFA;
+background-color: #FFFAFA;
 `
 
 export const Container = styled.div`
 margin-top: 150px;
 width: 100%;
-height: 100vh;
 `
 export const ContainerProduct = styled.div`
 width: 100%;
@@ -77,4 +75,10 @@ font-size: 16px;
     background-color: #808080;
     transition: 0.5s;
     }
+`
+
+export const ContainerAdmin = styled.div`
+background-color: gray;
+text-align: center;
+height: 80vh;
 `
