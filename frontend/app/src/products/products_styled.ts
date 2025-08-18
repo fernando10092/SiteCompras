@@ -82,3 +82,8 @@ background-color: gray;
 text-align: center;
 height: 80vh;
 `
+
+export const TextoTeste = styled.h1`
+background-color: red;
+font-size: 18px;
+`

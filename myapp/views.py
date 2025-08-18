@@ -28,7 +28,7 @@ import os
 )
 
 
-#View para listar produtos
+#View para listar e cadastrar produtos
 @api_view(["GET", "POST"])
 def ProductView(request):
     if request.method == "POST":
@@ -44,10 +44,17 @@ def ProductView(request):
     serializer = SerializerProduct(products, many=True)
     return Response({"products": serializer.data})
 
-
-
-
-
+#Excluir produtos
+@api_view(["POST", "DELETE"])
+def DeleteProduct(request):
+    if request.method == 'DELETE':
+        id = request.data.get("id")
+        db = Product.objects.filter(id=id)
+        if db.exists():
+            db.delete()
+            return Response({"mensagem":"Dados Excluidos"})
+        else:
+            return Response({"mensagem":"Dados não encontrados"})
 
 #INTERAÇÃO COM O BANCO DE DADOS
 @api_view(["GET", "POST"])

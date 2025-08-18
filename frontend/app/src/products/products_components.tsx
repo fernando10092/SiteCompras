@@ -1,4 +1,4 @@
-import { Background, ButtonProduct, Container, ContainerAdmin, ContainerProduct, DescriptionProduct, InputProduct, ListProducts, PictureProduct, PriceProduct, Text, TextProduct } from "./products_styled"
+import { Background, ButtonProduct, Container, ContainerAdmin, ContainerProduct, DescriptionProduct, InputProduct, ListProducts, PictureProduct, PriceProduct, Text, TextoTeste, TextProduct } from "./products_styled"
 import { Lista } from "../data/list_product";
 import Head from "../headers/headers_components";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,6 +21,7 @@ const Product = () => {
     const [img, setImg] = useState<File | null>(null);
     const [productData, setProductData] = useState<Array<any>>([]);
     const [admin, setAdmin] = useState<boolean>(true);
+    const [identification, setIdentification] = useState<any>()
 
     const getToken = () => {
         const token = localStorage.getItem('authToken');
@@ -88,29 +89,64 @@ const Product = () => {
                         <input name="qtd" placeholder="Quantidade" onChange={(e) => setQtd(e.target.value)} />
                         <input type="file" name="img" placeholder="Imagem" onChange={(e) => setImg(e.target.files![0])} />
                         <button type="button" onClick={async () => {
-                            const formData = new FormData();
-                            formData.append("product", product.toString());
-                            formData.append("price", price.toString());
-                            formData.append("description", description.toString());
-                            formData.append("qtd", qtd.toString());
-                            if (img) {
-                                formData.append("img", img);
+
+                            try {
+                                const formData = new FormData();
+                                formData.append("product", product.toString());
+                                formData.append("price", price.toString());
+                                formData.append("description", description.toString());
+                                formData.append("qtd", qtd.toString());
+                                if (img) {
+                                    formData.append("img", img);
+                                }
+
+                                const response = await fetch("http://127.0.0.1:8000/products/", {
+                                    method: "POST",
+                                    body: formData
+                                })
+
+                                if (response.ok) {
+                                    alert("Produto enviado com sucesso!");
+
+                                } else {
+                                    alert("Erro ao enviar produto!");
+                                }
+
+                            } catch (e) {
+                                alert({ "Erro ao cadastrar produto": e })
                             }
 
-                            const response = await fetch("http://127.0.0.1:8000/products/", {
-                                method: "POST",
-                                body: formData
-                            })
-
-                            if (response.ok) {
-                                alert("Produto enviado com sucesso!");
-
-                            } else {
-                                alert("Erro ao enviar produto!");
-                            }
 
                         }}>Enviar</button>
                     </form>
+
+
+                    <h1>EXCLUSÃO DE PRODUTOS</h1>
+                    <form>
+                        <input name="id" type="number" onChange={(e) => { setIdentification(Number(e.target.value)) }} />
+                        <button onClick={async () => {
+
+                            try {
+                                const response = await fetch("http://127.0.0.1:8000/products/delete/", {
+                                    method: "DELETE",
+                                    headers: {"Content-Type":"application/json"},
+                                    body: JSON.stringify({id: identification})
+                                })
+
+                                if (response.ok) {
+                                    alert("Dados Excluidos com Sucesso")
+                                } else {
+                                    alert("Erro ao excluir dados")
+                                }
+
+                            } catch (e) {
+                                alert({ "Erro ao Excluir Produto": e })
+                            }
+
+                        }}>Excluir</button>
+                    </form>
+
+
 
                 </ContainerAdmin>
             }
