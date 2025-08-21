@@ -26,6 +26,7 @@ urlpatterns = [
     path('api/', views.Api),
     path('products/', views.ProductView),
     path('products/delete/', views.DeleteProduct),
+    path('products/update/', views.UpdateProduct),
     path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('mp/', views.api_mercadopago),
     #path('createuser/', views.CreateUserAuth.as_view()),

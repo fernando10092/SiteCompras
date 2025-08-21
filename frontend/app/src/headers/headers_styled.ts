@@ -16,16 +16,16 @@ export const Avatar = styled.div`
 position: absolute;
 top: 10px;
 right: 15px;
-width: 80px;
-height: 80px;
+width: 60px;
+height: 60px;
 background-color:rgba(255, 255, 255, 0.3);
 border-radius: 50%;
 align-content: center;
 cursor: pointer;
 `
 export const AccessAvatar = styled.div`
-width: 80px;
-height: 80px;
+width: 60px;
+height: 60px;
 border-radius: 50%;
 background-color:rgba(255, 255, 255, 0.3);
 position: absolute;

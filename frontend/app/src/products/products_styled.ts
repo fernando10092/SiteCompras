@@ -78,12 +78,48 @@ font-size: 16px;
 `
 
 export const ContainerAdmin = styled.div`
-background-color: gray;
+background-color: #0A0C0D;
 text-align: center;
 height: 80vh;
+align-content: center;
 `
 
-export const TextoTeste = styled.h1`
-background-color: red;
+export const ContainerArea = styled.div`
+background-color: #537082;
+`
+
+export const TextMainAdmin = styled.h1`
+font-size: 24px;
+font-weight: 600;
+color: white;
+`
+
+export const TextSubAdmin = styled.h4`
+margin-top: 20px;
 font-size: 18px;
+font-weight: 400;
+`
+
+type config = {
+    width: string;
+}
+
+export const InputAdmin = styled.input<config>`
+width: ${(e)=>e.width};
+height: 30px;
+`
+
+export const BtnAdmin = styled.button`
+width: 100px;
+height: 30px;
+background-color: green;
+display: block;
+margin: 10px auto;
+border: none;
+color: white;
+border-radius: 5px;
+
+&:hover{
+    background-color: darkgreen;
+}
 `

@@ -1,4 +1,4 @@
-import { Background, ButtonProduct, Container, ContainerAdmin, ContainerProduct, DescriptionProduct, InputProduct, ListProducts, PictureProduct, PriceProduct, Text, TextoTeste, TextProduct } from "./products_styled"
+import { Background, BtnAdmin, ButtonProduct, Container, ContainerAdmin, ContainerArea, ContainerProduct, DescriptionProduct, InputAdmin, InputProduct, ListProducts, PictureProduct, PriceProduct, Text, TextMainAdmin, TextProduct, TextSubAdmin } from "./products_styled"
 import { Lista } from "../data/list_product";
 import Head from "../headers/headers_components";
 import { useDispatch, useSelector } from "react-redux";
@@ -80,71 +80,128 @@ const Product = () => {
             {admin &&
                 <ContainerAdmin>
 
-                    <h1>PAINEL DO ADMINISTRADOR</h1>
-                    <h4>CADASTRO DE PRODUTOS</h4>
-                    <form>
-                        <input name="product" placeholder="Nome do Produto" onChange={(e) => setProduct(e.target.value)} />
-                        <input name="price" placeholder="Preço" onChange={(e) => setPrice(e.target.value)} />
-                        <input name="description" placeholder="Descrição" onChange={(e) => setDescription(e.target.value)} />
-                        <input name="qtd" placeholder="Quantidade" onChange={(e) => setQtd(e.target.value)} />
-                        <input type="file" name="img" placeholder="Imagem" onChange={(e) => setImg(e.target.files![0])} />
-                        <button type="button" onClick={async () => {
+                    <TextMainAdmin>PAINEL DO ADMINISTRADOR</TextMainAdmin>
 
-                            try {
-                                const formData = new FormData();
-                                formData.append("product", product.toString());
-                                formData.append("price", price.toString());
-                                formData.append("description", description.toString());
-                                formData.append("qtd", qtd.toString());
-                                if (img) {
-                                    formData.append("img", img);
+                    <ContainerArea>
+                        <TextSubAdmin>CADASTRO DE PRODUTOS</TextSubAdmin>
+                        <form>
+                            <InputAdmin width="200px" name="product" placeholder="Nome do Produto" onChange={(e) => setProduct(e.target.value)} />
+                            <InputAdmin width="100px" name="price" placeholder="Preço" onChange={(e) => setPrice(e.target.value)} />
+                            <InputAdmin width="250px" name="description" placeholder="Descrição" onChange={(e) => setDescription(e.target.value)} />
+                            <InputAdmin width="50px" name="qtd" placeholder="Quantidade" onChange={(e) => setQtd(e.target.value)} />
+                            <InputAdmin width="200px" type="file" name="img" placeholder="Imagem" onChange={(e) => setImg(e.target.files![0])} />
+                            <BtnAdmin type="button" onClick={async () => {
+
+                                try {
+                                    const formData = new FormData();
+                                    formData.append("product", product.toString());
+                                    formData.append("price", price.toString());
+                                    formData.append("description", description.toString());
+                                    formData.append("qtd", qtd.toString());
+                                    if (img) {
+                                        formData.append("img", img);
+                                    }
+
+                                    const response = await fetch("http://127.0.0.1:8000/products/", {
+                                        method: "POST",
+                                        body: formData
+                                    })
+
+                                    if (response.ok) {
+                                        alert("Produto enviado com sucesso!");
+
+                                    } else {
+                                        alert("Erro ao enviar produto!");
+                                    }
+
+                                } catch (e) {
+                                    alert({ "Erro ao cadastrar produto": e })
                                 }
 
-                                const response = await fetch("http://127.0.0.1:8000/products/", {
-                                    method: "POST",
-                                    body: formData
-                                })
 
-                                if (response.ok) {
-                                    alert("Produto enviado com sucesso!");
+                            }}>Enviar</BtnAdmin>
+                        </form>
+                    </ContainerArea>
 
-                                } else {
-                                    alert("Erro ao enviar produto!");
+
+                    <ContainerArea>
+                        <TextSubAdmin>EXCLUSÃO DE PRODUTOS</TextSubAdmin>
+                        <form>
+                            <InputAdmin width="80px" name="id" type="number" onChange={(e) => { setIdentification(Number(e.target.value)) }} />
+                            <BtnAdmin onClick={async () => {
+
+                                try {
+                                    const response = await fetch("http://127.0.0.1:8000/products/delete/", {
+                                        method: "DELETE",
+                                        headers: { "Content-Type": "application/json" },
+                                        body: JSON.stringify({ id: identification })
+                                    })
+
+                                    if (response.ok) {
+                                        alert("Dados Excluidos com Sucesso")
+                                    } else {
+                                        alert("Erro ao excluir dados")
+                                    }
+
+                                } catch (e) {
+                                    alert({ "Erro ao Excluir Produto": e })
                                 }
 
-                            } catch (e) {
-                                alert({ "Erro ao cadastrar produto": e })
-                            }
+                            }}>Excluir</BtnAdmin>
+                        </form>
 
 
-                        }}>Enviar</button>
-                    </form>
+                    </ContainerArea>
+
+                    <ContainerArea>
+                        <TextSubAdmin>UPDATE PRODUTOS</TextSubAdmin>
+                        <form>
+                            <InputAdmin width="80px" name="id" type="number" onChange={(e) => { setIdentification(Number(e.target.value)) }} />
+                            <InputAdmin width="200px" name="product" placeholder="Nome do Produto" onChange={(e) => setProduct(e.target.value)} />
+                            <InputAdmin width="80px" name="price" placeholder="Preço" onChange={(e) => setPrice(e.target.value)} />
+                            <InputAdmin width="250px" name="description" placeholder="Descrição" onChange={(e) => setDescription(e.target.value)} />
+                            <InputAdmin width="50px" name="qtd" placeholder="Quantidade" onChange={(e) => setQtd(e.target.value)} />
+                            <InputAdmin width="200px" type="file" name="img" placeholder="Imagem" onChange={(e) => setImg(e.target.files![0])} />
+                            <BtnAdmin type="button" onClick={async () => {
+
+                                try {
+
+                                    const formData = new FormData();
+                                    formData.append("id", identification.toString())
+                                    formData.append("product", product.toString());
+                                    formData.append("price", price.toString());
+                                    formData.append("description", description.toString());
+                                    formData.append("qtd", qtd.toString());
+                                    if (img) {
+                                        formData.append("img", img.toString());
+                                    }
+
+                                    const response = await fetch("http://127.0.0.1:8000/products/update/", {
+                                        method: "PUT",
+                                        //headers: {"Content-Type":"application/json"},
+                                        body: formData
+                                    })
+
+                                    if (response.ok) {
+                                        alert("Dados Atualizados com Sucesso")
+                                    } else {
+                                        alert('Erro ao atualizar dados')
+                                    }
 
 
-                    <h1>EXCLUSÃO DE PRODUTOS</h1>
-                    <form>
-                        <input name="id" type="number" onChange={(e) => { setIdentification(Number(e.target.value)) }} />
-                        <button onClick={async () => {
-
-                            try {
-                                const response = await fetch("http://127.0.0.1:8000/products/delete/", {
-                                    method: "DELETE",
-                                    headers: {"Content-Type":"application/json"},
-                                    body: JSON.stringify({id: identification})
-                                })
-
-                                if (response.ok) {
-                                    alert("Dados Excluidos com Sucesso")
-                                } else {
-                                    alert("Erro ao excluir dados")
+                                } catch (e) {
+                                    alert("Erro: " + e)
                                 }
 
-                            } catch (e) {
-                                alert({ "Erro ao Excluir Produto": e })
-                            }
 
-                        }}>Excluir</button>
-                    </form>
+
+                            }}>Atualizar</BtnAdmin>
+                        </form>
+
+
+                    </ContainerArea>
+
+
 
 
 

@@ -55,6 +55,19 @@ def DeleteProduct(request):
             return Response({"mensagem":"Dados Excluidos"})
         else:
             return Response({"mensagem":"Dados não encontrados"})
+@api_view(["PUT"])    
+def UpdateProduct(request):
+    if request.method == "PUT":
+        id = request.data.get("id")
+        idx = Product.objects.get(id=id)
+        idx.product = request.data.get("product", idx.product)
+        idx.price = request.data.get("price", idx.price)
+        idx.description = request.data.get("description", idx.description)
+        idx.qtd = request.data.get("qtd", idx.qtd)
+        idx.img = request.FILES.get("img", idx.img)
+        idx.save()
+        return Response({"Mensagem":"Dados Atualizados"})
+        
 
 #INTERAÇÃO COM O BANCO DE DADOS
 @api_view(["GET", "POST"])

@@ -5,7 +5,7 @@ width: 100%;
 height: 200px;
 background-color: black;
 position: relative;
-
+text-align: center;
 display: grid;
 grid-template-columns: auto auto auto;
 `
