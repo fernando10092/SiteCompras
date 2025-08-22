@@ -1,17 +1,17 @@
 import { Background, BtnAdmin, ButtonProduct, Container, ContainerAdmin, ContainerArea, ContainerProduct, DescriptionProduct, InputAdmin, InputProduct, ListProducts, PictureProduct, PriceProduct, Text, TextMainAdmin, TextProduct, TextSubAdmin } from "./products_styled"
-import { Lista } from "../data/list_product";
 import Head from "../headers/headers_components";
 import { useDispatch, useSelector } from "react-redux";
 import { addCarrinho } from "../app/features/slice";
-import { store } from "../app/store";
 import { useNavigate } from "react-router";
 import HeroComponents from "../informe/hero_components";
 import Footer from "../footers/footer_components";
 import { useEffect, useState } from "react";
-import imagens from "../../../../media/products/modelo1.jpg";
 
 
+//HOME
 const Product = () => {
+
+    //VARIAVEIS
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [product, setProduct] = useState<String>("item");
@@ -23,18 +23,24 @@ const Product = () => {
     const [admin, setAdmin] = useState<boolean>(true);
     const [identification, setIdentification] = useState<any>()
 
+    //FUNCAO PARA OBTER TOKEN
     const getToken = () => {
         const token = localStorage.getItem('authToken');
         return token ? token : null;
     }
 
+    //VERIFICAR SE O USUARIO ESTA LOGADO
+    const token = getToken();
+    var isLog = token ? true : false;
+
+    //INICIALIZAR DADOS
     useEffect(() => {
 
         getData();
+
     }, []);
 
-
-    //Obter Dados do Banco
+    //OBTER DADOS DO BANCO
     const getData = async () => {
         const dados = await fetch("http://127.0.0.1:8000/products/");
         dados.json().then((data) => {
@@ -42,7 +48,7 @@ const Product = () => {
         })
     }
 
-
+    //RETURN
     return (
         <>
             <Head />
@@ -65,23 +71,17 @@ const Product = () => {
                                             } else {
                                                 navigate("/checkout");
                                             }
-
                                         }
                                     }>COMPRAR</ButtonProduct>
                                 </ListProducts>
-
                             ))
                         }
                     </ContainerProduct>
-
                 </Container>
-
             </Background>
-            {admin &&
+            {isLog &&
                 <ContainerAdmin>
-
                     <TextMainAdmin>PAINEL DO ADMINISTRADOR</TextMainAdmin>
-
                     <ContainerArea>
                         <TextSubAdmin>CADASTRO DE PRODUTOS</TextSubAdmin>
                         <form>
@@ -91,7 +91,6 @@ const Product = () => {
                             <InputAdmin width="50px" name="qtd" placeholder="Quantidade" onChange={(e) => setQtd(e.target.value)} />
                             <InputAdmin width="200px" type="file" name="img" placeholder="Imagem" onChange={(e) => setImg(e.target.files![0])} />
                             <BtnAdmin type="button" onClick={async () => {
-
                                 try {
                                     const formData = new FormData();
                                     formData.append("product", product.toString());
@@ -101,56 +100,43 @@ const Product = () => {
                                     if (img) {
                                         formData.append("img", img);
                                     }
-
                                     const response = await fetch("http://127.0.0.1:8000/products/", {
                                         method: "POST",
                                         body: formData
                                     })
-
                                     if (response.ok) {
                                         alert("Produto enviado com sucesso!");
-
                                     } else {
                                         alert("Erro ao enviar produto!");
                                     }
-
                                 } catch (e) {
                                     alert({ "Erro ao cadastrar produto": e })
                                 }
-
-
                             }}>Enviar</BtnAdmin>
                         </form>
                     </ContainerArea>
-
 
                     <ContainerArea>
                         <TextSubAdmin>EXCLUSÃO DE PRODUTOS</TextSubAdmin>
                         <form>
                             <InputAdmin width="80px" name="id" type="number" onChange={(e) => { setIdentification(Number(e.target.value)) }} />
                             <BtnAdmin onClick={async () => {
-
                                 try {
                                     const response = await fetch("http://127.0.0.1:8000/products/delete/", {
                                         method: "DELETE",
                                         headers: { "Content-Type": "application/json" },
                                         body: JSON.stringify({ id: identification })
                                     })
-
                                     if (response.ok) {
                                         alert("Dados Excluidos com Sucesso")
                                     } else {
                                         alert("Erro ao excluir dados")
                                     }
-
                                 } catch (e) {
                                     alert({ "Erro ao Excluir Produto": e })
                                 }
-
                             }}>Excluir</BtnAdmin>
                         </form>
-
-
                     </ContainerArea>
 
                     <ContainerArea>
@@ -163,9 +149,7 @@ const Product = () => {
                             <InputAdmin width="50px" name="qtd" placeholder="Quantidade" onChange={(e) => setQtd(e.target.value)} />
                             <InputAdmin width="200px" type="file" name="img" placeholder="Imagem" onChange={(e) => setImg(e.target.files![0])} />
                             <BtnAdmin type="button" onClick={async () => {
-
                                 try {
-
                                     const formData = new FormData();
                                     formData.append("id", identification.toString())
                                     formData.append("product", product.toString());
@@ -175,40 +159,25 @@ const Product = () => {
                                     if (img) {
                                         formData.append("img", img.toString());
                                     }
-
                                     const response = await fetch("http://127.0.0.1:8000/products/update/", {
                                         method: "PUT",
                                         //headers: {"Content-Type":"application/json"},
                                         body: formData
                                     })
-
                                     if (response.ok) {
                                         alert("Dados Atualizados com Sucesso")
                                     } else {
                                         alert('Erro ao atualizar dados')
                                     }
-
-
                                 } catch (e) {
                                     alert("Erro: " + e)
                                 }
-
-
-
                             }}>Atualizar</BtnAdmin>
                         </form>
-
-
                     </ContainerArea>
-
-
-
-
-
                 </ContainerAdmin>
             }
             <Footer />
-
         </>
     )
 }

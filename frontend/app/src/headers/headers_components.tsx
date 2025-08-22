@@ -43,9 +43,9 @@ const Head = () => {
                 </ContHero>
                 <Barra>
                     <Ul>
-                        <Li><H1>Home</H1></Li>
-                        <Li><H1>Masculino</H1></Li>
-                        <Li><H1>Feminino</H1></Li>
+                        <Li onClick={()=>{navigate("/")}}><H1>Home</H1></Li>
+                        <Li onClick={()=>{navigate("/men")}}><H1>Masculino</H1></Li>
+                        <Li onClick={()=>{navigate("/women")}}><H1>Feminino</H1></Li>
                     </Ul>
                 </Barra>
             </Container>
